@@ -1,0 +1,4 @@
+AuthUserFile /var/www/chat/.htpasswd
+AuthName Login
+AuthType Basic
+require valid-user
