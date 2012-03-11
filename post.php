@@ -1,5 +1,5 @@
 <?php
-	$con = mysql_connect("localhost","root","toor");
+	$con = mysql_connect("localhost","username","password");
 	date_default_timezone_set('America/New_York');
 	$u=$_SERVER['PHP_AUTH_USER'];
 	$m=$_POST['m'];

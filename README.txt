@@ -16,6 +16,11 @@ database: "chat"
 		field "rights":int(10)
 		field "nick":varchar(50)
 		field "banned":int(10)
+		field "muted":int(10)
+
+	table: "misc"
+		field "topic":varchar(500)
+
 
 Put your accounts into "users" where:
 
@@ -23,12 +28,17 @@ Put your accounts into "users" where:
 "rights" = their rights (3=admin,2=mod,1=regular)
 "nick" = their nickname
 "banned" = their banned status (1=banned, 0=not banned)
+"muted" = their muted status (1=muted, 0=not muted)
 
 Put those accounts into the .htpasswd file in the format:
 
 user:pass
 
 Seperated by newlines
+
+
+Also, make sure to change the SQL login credentials to your own.
+
 
 Enjoy!
 

@@ -1,7 +1,7 @@
 <?php
 $user=$_SERVER['PHP_AUTH_USER'];
 $ver='2.0.2';
-$con = mysql_connect("localhost","root","toor");
+$con = mysql_connect("localhost","username","password");
 $result=mysql_query("SELECT * FROM `chat`.`users` WHERE user = '$user';"); // GET USER'S RIGHTS (3=ADMIN,2=MOD,1=REGULAR)
 	while($row = mysql_fetch_array($result)){
 		$rights=$row['rights'];
