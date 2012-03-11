@@ -38,7 +38,7 @@ Seperated by newlines
 
 
 Also, make sure to change the SQL login credentials to your own.
-
+and make sure you change the directory the ".htaccess" file is pointing to.
 
 Enjoy!
 
