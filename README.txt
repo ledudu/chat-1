@@ -1,4 +1,4 @@
-The Chat 2.0.2 by Nate Baker (maplehaxx.com)
+The Chat 2.0.5 by Nate Baker (maplehaxx.com)
 
 If you find any bugs email me at: nate[at]maplehaxx.com
 
@@ -7,6 +7,9 @@ SETUP:
 database: "chat"
 	table: "messages"
 		field "msg":varchar(500)
+		field "time":varchar(20)
+		field "rights":int(10)
+		field "nick":varchar(50)
 
 	table: "online"
 		field "user":varchar(20)
@@ -20,6 +23,7 @@ database: "chat"
 
 	table: "misc"
 		field "topic":varchar(500)
+		field "background":varchar(500)
 
 
 Put your accounts into "users" where:
@@ -39,7 +43,5 @@ Seperated by newlines
 
 Also, make sure to change the SQL login credentials to your own.
 and make sure you change the directory the ".htaccess" file is pointing to.
-
-Enjoy!
 
 ------------------------------------------------------------------
