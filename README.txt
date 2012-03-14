@@ -6,6 +6,7 @@ SETUP:
 
 database: "chat"
 	table: "messages"
+		field "id":varchar(10) (auto incremented)
 		field "msg":varchar(500)
 		field "time":varchar(20)
 		field "rights":int(10)
