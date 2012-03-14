@@ -1,6 +1,6 @@
 <?php
 $user   = $_SERVER['PHP_AUTH_USER'];
-$ver    = '2.0.5';
+$ver    = '2.0.6';
 $con    = mysql_connect("localhost", "username", "password");
 $result = mysql_query("SELECT * FROM `chat`.`users` WHERE user = '$user';"); // GET USER'S RIGHTS (3=ADMIN,2=MOD,1=REGULAR)
 while ($row = mysql_fetch_array($result)) {
@@ -98,9 +98,9 @@ while ($row = mysql_fetch_array($result)) {
         </style>
         <script src='/jquery.js'></script>
         <script type='text/javascript'>
-            var old, oldTime;
-
-            function send() { // FUNCTION TO SEND A MESSAGE
+            var old,ID;
+			
+            function send() {
                 var message = $("#msg").val();
                 if (message.trim() != "") {
                     $("#msg").val("");
@@ -116,42 +116,38 @@ while ($row = mysql_fetch_array($result)) {
                 }
             }
 
-            function update() { // FUNCTION TO UPDATE THE CHAT
+            function update() {
                 $.get("chat.php", function (result) {
-                    if (result != old) {
+                    if (result != old && result != "") {
                         old = result;
-                        if (result != "") {
-                            var o = $.parseJSON(result);
-                            result = "[" + o.t + "] <span class='u" + o.r + "'>" + o.n + "</span> " + o.m;
-                            $("#content").append(result + "<br>");
-                            $("#content").prop({
-                                scrollTop: $("#content").prop("scrollHeight")
-                            });
-							if(o.u==null) {
-								o.u="None";
-							}
-                            $("#online").html("<b>Users Online</b>: " + o.u);
-                            $("#topic").html("<b>Room Topic</b>: " + o.p);
-                            $("body").css("background", "url('" + o.b + "')");
-                        }
-                    } else if (result == "") {
-                        $("#content").html(""); // CLEAR #content
+                        var o = $.parseJSON(result);
+                        result = "[" + o.t + "] <span class='u" + o.r + "'>" + o.n + "</span> " + o.m;
+                        $("#content").append(result + "<br>");
+                        $("#content").prop({
+							scrollTop: $("#content").prop("scrollHeight")
+                        });
+						if(o.u==null) {
+							o.u="None";
+						}
+                        $("#online").html("<b>Users Online</b>: " + o.u);
+                        $("#topic").html("<b>Room Topic</b>: " + o.p);
+                        $("body").css("background", "url('" + o.b + "')");
                     }
                 });
             }
 
-            function disconnect() { // FUNCTION TO DISCONNECT FROM THE CHAT
+            function disconnect() {
                 $.post("post.php", {
                     a: 'disconnect'
                 });
             }
 
-            function commandList() { // FUNCTION TO SHOW COMMANDLIST
+            function commandList() {
                 $("#side").show();
                 $("#side").html("<a href='#' onclick='$(\"#side\").fadeOut(\"normal\");' style='font-size:15px;color:red;float:right'>X</a><b>Command List:</b><br><u>Admins:</u><br>/ban [user]<br>/pardon [user]<br>/server [server message]<br>/topic [new topic]<br>/kick [user]<br>/bg [background image]<br><u>Mods:</u><br>/clear<br>/mute [user]<br>/unmute [user]<br><u>Everyone:</u><br>/nick [new nickname]<br>/pic [picture url]<br>/link [url]<br>/cmdlist<br>/rules<br>");
             }
 
-            function showRules() { // FUNCTION TO SHOW RULES
+            function showRules() {
                 $("#side").show();
                 $("#side").html("<a href='#' onclick='$(\"#side\").fadeOut(\"normal\");' style='font-size:15px;color:red;float:right'>X</a><b>Rules:</b><br>1. No idling for extended periods of time<br>2. No incessant spamming<br>3. No illegal content<br>4. No unfunny content<br>");
             }
@@ -161,15 +157,27 @@ while ($row = mysql_fetch_array($result)) {
                 return null;
             }
 
-            function connect() { // FUNCTION TO CONNECT TO THE CHAT
+            function connect() {
                 $.post("post.php", {
                     a: 'connect'
                 });
             }
+			
+			function check() {
+				$.post("chat.php", {get:ID}, function (result) {
+					if(result!=ID) {	
+						ID=result;
+						update();
+					}
+					if(result=="") {
+						$("#content").html("");
+					}
+				});
+			}
 
             $(document).ready(function () {
-                setInterval(function () { // UPDATE THE CHAT EVERY 500 ms
-                    update();
+                setInterval(function () {
+					check();
                 }, 500);
             });
         </script>

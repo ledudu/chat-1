@@ -1,5 +1,6 @@
 <?php
 $con = mysql_connect("localhost", "username", "password");
+date_default_timezone_set('America/New_York');
 $u = $_SERVER['PHP_AUTH_USER'];
 $m = $_POST['m'];
 $a = $_POST['a'];
@@ -116,9 +117,9 @@ if ($a == 'disconnect') { // DISCONNECTING
     $msg = $m;
 }
 $m = $msg;
-mysql_query("UPDATE `chat`.`messages` SET `time` = '" . date("H:i:s") . "', `rights` = '$rights', `msg` = '" . mysql_escape_string(stripslashes($m)) . "', `nick` = '$nick';"); // TRY TO UPDATE MESSAGES
+mysql_query("UPDATE `chat`.`messages` SET `id` = `id`+1, `time` = '" . date("H:i:s") . "', `rights` = '$rights', `msg` = '" . mysql_escape_string(stripslashes($m)) . "', `nick` = '$nick';"); // TRY TO UPDATE MESSAGES
 if (mysql_affected_rows() == 0) { // IF THERE WAS PREVIOUSLY NO MESSAGE IN THE DB
-    mysql_query("INSERT INTO `chat`.`messages` (`time`,`rights`,`nick`,`msg`) VALUES ('" . date("H:i:s") . "', '$rights', '$nick', '" . mysql_escape_string(stripslashes($m)) . "');"); // INSERT ONE
+mysql_query("INSERT INTO `chat`.`messages` (`time`,`rights`,`nick`,`msg`) VALUES ('" . date("H:i:s") . "', '$rights', '$nick', '" . mysql_escape_string(stripslashes($m)) . "');"); // INSERT ONE
 }
 mysql_close($con);
 ?>

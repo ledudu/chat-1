@@ -1,8 +1,6 @@
 <?php
 $con    = mysql_connect("localhost", "username", "password");
 $user   = $_SERVER['PHP_AUTH_USER'];
-$now    = $_REQUEST['n'];
-$old    = $_REQUEST['o'];
 $result = mysql_query("SELECT * FROM `chat`.`users`;");
 while ($row = mysql_fetch_array($result)) {
     if ($row['user'] == stripslashes($user) && $row['banned'] == '1') {
@@ -10,6 +8,7 @@ while ($row = mysql_fetch_array($result)) {
         exit; // DISPLAY MESSAGE AND EXIT IF USER IS BANNED
     }
 }
+
 $result = mysql_query("SELECT `topic` FROM `chat`.`misc`;");
 while ($row = mysql_fetch_array($result)) {
     $topic = $row['topic'];
@@ -25,6 +24,10 @@ while ($row = mysql_fetch_array($result)) {
 $result  = mysql_query("SELECT * FROM `chat`.`messages` LIMIT 1;"); // GET MOST RECENT MESSAGE
 $message = array();
 while ($row = mysql_fetch_array($result)) {
+	if (isset($_POST['get'])) {
+		echo $row['id'];
+		exit;
+	}
     $time         = time();
     $message['t'] = $row['time']; // current time
     $message['r'] = $row['rights']; // user's rights
@@ -35,7 +38,7 @@ while ($row = mysql_fetch_array($result)) {
     $message['b'] = $bg; // background
     $JSON_message = json_encode($message);
     echo $JSON_message;
-    exit;
     mysql_close($con);
+	exit;
 }
 ?>

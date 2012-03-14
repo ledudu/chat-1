@@ -1,4 +1,4 @@
-The Chat 2.0.5 by Nate Baker (maplehaxx.com)
+The Chat 2.0.6 by Nate Baker (maplehaxx.com)
 
 If you find any bugs email me at: nate[at]maplehaxx.com
 
